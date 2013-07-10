@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BlueSerial Beta</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_helpscreen">Helpscreen</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="pref_send_report">Send crash reports</string>
+    <string name="pref_send_report_summary">Helps to fix bugs</string>
+    <string name="pref_orientation_title">Set Orientation</string>
+    <string name="pref_orientation_summary">Set the orientation</string>
+    <string name="pref_uuid_title">Change UUID</string>
+    <string name="pref_uuid_summary">Use non-standard serial UUID</string>
+    <string name="pref_uuid_update">Update UUID</string>
+    <string name="pref_update_setting">Update Settings</string>
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+ 
+        <EditTextPreference
+                android:title="@string/pref_uuid_title"
+                android:summary="@string/pref_uuid_summary"
+                android:key="prefUuid"
+                android:defaultValue="00001101-0000-1000-8000-00805F9B34FB"/>
+     
+        <ListPreference
+            android:key="prefOrientation"
+            android:entries="@array/orientation"
+            android:entryValues="@array/orientationValues"
+            android:summary="@string/pref_orientation_summary"
+            android:title="@string/pref_orientation_title" />
+ 
+</PreferenceScreen>
