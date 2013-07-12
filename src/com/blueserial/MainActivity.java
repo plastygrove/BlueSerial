@@ -25,13 +25,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	private static final String TAG = "BlueTest5-MainActivity";
+	private int mMaxChars = 50000;//Default
 	private UUID mDeviceUUID;
 	private BluetoothSocket mBTSocket;
 	private ReadInput mReadThread = null;
@@ -44,6 +47,10 @@ public class MainActivity extends Activity {
 	private Button mBtnDisconnect;
 	private Button mBtnSend;
 	private Button mBtnClear;
+	private Button mBtnClearInput;
+	private ScrollView scrollView;
+	private CheckBox chkScroll;
+	private CheckBox chkReceiveText;
 
 	private boolean mIsBluetoothConnected = false;
 
@@ -61,6 +68,7 @@ public class MainActivity extends Activity {
 		Bundle b = intent.getExtras();
 		mDevice = b.getParcelable(Homescreen.DEVICE_EXTRA);
 		mDeviceUUID = UUID.fromString(b.getString(Homescreen.DEVICE_UUID));
+		mMaxChars = b.getInt(Homescreen.BUFFER_SIZE);
 
 		Log.d(TAG, "Ready");
 
@@ -69,6 +77,10 @@ public class MainActivity extends Activity {
 		mBtnClear = (Button) findViewById(R.id.btnClear);
 		mTxtReceive = (TextView) findViewById(R.id.txtReceive);
 		mEditSend = (EditText) findViewById(R.id.editSend);
+		scrollView = (ScrollView) findViewById(R.id.viewScroll);
+		chkScroll = (CheckBox) findViewById(R.id.chkScroll);
+		chkReceiveText = (CheckBox) findViewById(R.id.chkReceiveText);
+		mBtnClearInput = (Button) findViewById(R.id.btnClearInput);
 
 		mTxtReceive.setMovementMethod(new ScrollingMovementMethod());
 
@@ -101,6 +113,14 @@ public class MainActivity extends Activity {
 				mEditSend.setText("");
 			}
 		});
+		
+		mBtnClearInput.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				mTxtReceive.setText("");
+			}
+		});
 
 	}
 
@@ -129,21 +149,42 @@ public class MainActivity extends Activity {
 					if (inputStream.available() > 0) {
 						inputStream.read(buffer);
 						int i = 0;
-						/* This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4
-						 * http://stackoverflow.com/a/8843462/1287554
+						/*
+						 * This is needed because new String(buffer) is taking the entire buffer i.e. 256 chars on Android 2.3.4 http://stackoverflow.com/a/8843462/1287554
 						 */
 						for (i = 0; i < buffer.length && buffer[i] != 0; i++) {
-						} 
+						}
 						final String strInput = new String(buffer, 0, i);
-						final String str = mTxtReceive.getText().toString();
-						mTxtReceive.post(new Runnable() {
 
-							@Override
-							public void run() {
+						/*
+						 * If checked then receive text, better design would probably be to stop thread if unchecked and free resources, but this is a quick fix
+						 */
 
-								mTxtReceive.setText(str + strInput + "\n");
-							}
-						});
+						if (chkReceiveText.isChecked()) {
+							mTxtReceive.post(new Runnable() {
+								@Override
+								public void run() {
+									mTxtReceive.append(strInput);
+									//Uncomment below for testing
+									//mTxtReceive.append("\n");
+									//mTxtReceive.append("Chars: " + strInput.length() + " Lines: " + mTxtReceive.getLineCount() + "\n");
+									
+									int txtLength = mTxtReceive.getEditableText().length();  
+									if(txtLength > mMaxChars){
+										mTxtReceive.getEditableText().delete(0, txtLength - mMaxChars);
+									}
+
+									if (chkScroll.isChecked()) { // Scroll only if this is checked
+										scrollView.post(new Runnable() { // Snippet from http://stackoverflow.com/a/4612082/1287554
+													@Override
+													public void run() {
+														scrollView.fullScroll(View.FOCUS_DOWN);
+													}
+												});
+									}
+								}
+							});
+						}
 
 					}
 					Thread.sleep(500);
@@ -271,7 +312,7 @@ public class MainActivity extends Activity {
 			} else {
 				msg("Connected to device");
 				mIsBluetoothConnected = true;
-				mReadThread = new ReadInput(); // Kick of input reader
+				mReadThread = new ReadInput(); // Kick off input reader
 			}
 
 			progressDialog.dismiss();

@@ -53,10 +53,12 @@ public class Homescreen extends Activity {
 	private UUID mDeviceUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // Standard SPP UUID
 	// (http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#createInsecureRfcommSocketToServiceRecord%28java.util.UUID%29)
 
+	private int mBufferSize = 50000; //Default
 	public static final String DEVICE_EXTRA = "com.blueserial.SOCKET";
 	public static final String DEVICE_UUID = "com.blueserial.uuid";
 	private static final String DEVICE_LIST = "com.blueserial.devicelist";
 	private static final String DEVICE_LIST_SELECTED = "com.blueserial.devicelistselected";
+	public static final String BUFFER_SIZE = "com.blueserial.buffersize";
 	private static final String TAG = "BlueTest5-Homescreen";
 
 	@Override
@@ -119,6 +121,7 @@ public class Homescreen extends Activity {
 				Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 				intent.putExtra(DEVICE_EXTRA, device);
 				intent.putExtra(DEVICE_UUID, mDeviceUUID.toString());
+				intent.putExtra(BUFFER_SIZE, mBufferSize);
 				startActivity(intent);
 			}
 		});
@@ -169,6 +172,8 @@ public class Homescreen extends Activity {
 			String uuid = prefs.getString("prefUuid", "Null");
 			mDeviceUUID = UUID.fromString(uuid);
 			Log.d(TAG, "UUID: " + uuid);
+			String bufSize = prefs.getString("prefTextBuffer", "Null");
+			mBufferSize = Integer.parseInt(bufSize);
 
 			String orientation = prefs.getString("prefOrientation", "Null");
 			Log.d(TAG, "Orientation: " + orientation);

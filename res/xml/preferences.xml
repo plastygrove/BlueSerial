@@ -13,5 +13,13 @@
             android:entryValues="@array/orientationValues"
             android:summary="@string/pref_orientation_summary"
             android:title="@string/pref_orientation_title" />
+        
+        <EditTextPreference 
+            android:key="prefTextBuffer"
+            android:title="@string/pref_text_buffer_title"
+            android:summary="@string/pref_text_buffer_summary"
+            android:defaultValue = "50000"
+            android:inputType = "number"
+            />
  
 </PreferenceScreen>

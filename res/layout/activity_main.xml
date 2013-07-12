@@ -7,40 +7,82 @@
     android:paddingRight="16dp"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/btnDisconnect"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Disconnect" />
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/txtReceive"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="top"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
-        android:hint="Message shows up here ..." />
-    <EditText
-            android:id="@+id/editSend"
+        <Button
+            android:id="@+id/btnDisconnect"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:text="Disconnect" />
+
+        <Button
+            android:id="@+id/btnClearInput"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="5"
+            android:text="Clear Input" />
+
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter command ..." />
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/chkScroll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:checked="true"
+                android:text="Scroll" />
+
+            <CheckBox
+                android:id="@+id/chkReceiveText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Read" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/viewScroll"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/txtReceive"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#eeeeee"
+            android:hint="Message shows up here ..."
+            android:scrollbars="vertical" />
+    </ScrollView>
+
+    <EditText
+        android:id="@+id/editSend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter command ..."
+        android:inputType="text" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
-        
-        <Button 
+
+        <Button
             android:id="@+id/btnClear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:padding="5dp"
-            android:text="Clear"
-            />
+            android:text="Clear" />
 
         <Button
             android:id="@+id/btnSend"
