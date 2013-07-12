@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:background="#eeeeee"
+            android:typeface="monospace"
             android:hint="Message shows up here ..."
             android:scrollbars="vertical" />
     </ScrollView>
