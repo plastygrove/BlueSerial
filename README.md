@@ -1,3 +1,8 @@
+Using the app
+=============
+
+The app is available on the [Google Play Store](https://play.google.com/store/apps/details?id=com.blueserial "Install on your Android device")
+
 Blue Serial
 ===========
 
