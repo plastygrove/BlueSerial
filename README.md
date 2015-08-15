@@ -1,3 +1,10 @@
+Changelog
+=========
+15-Aug-2015:
+Migrated to Android Studio from Eclipse
+Removed "Beta"
+Updated .gitignore
+
 Using the app
 =============
 
