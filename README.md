@@ -29,4 +29,5 @@ Then import the project into Eclipse using File->New->Project...->Android->Andro
 Contact
 =======
 
-If you have any questions, feel free to reach out to me at plasty.grove@g****.com
+~~If you have any questions, feel free to reach out to me at ****@***.com~~
+Sorry, I am not supporting this project anymore. Feel free to use the code as you like and there are a lot of alternatives also on the play store.
